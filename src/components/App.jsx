@@ -2,6 +2,18 @@ import ContactForm from 'components/contactForm/ContactForm';
 import ContactList from 'components/contactList/ContactList';
 import Filter from 'components/filter/Filter';
 import css from './App.module.css';
+import RegisterForm from './RegisterForm/RegisterForm';
+import { Link } from 'react-router-dom';
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { PrivateRoute } from './PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute';
+import Layout from './Layout';
+
+const HomePage = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const ContactsPage = lazy(() => import('../pages/Contacts'));
 
 export function App() {
   return (
@@ -14,14 +26,62 @@ export function App() {
         color: 'rgb(59, 55, 55)',
       }}
     >
-      <div className={css.container}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegisterPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+            }
+          />
+        </Route>
+      </Routes>
+      {/* <div className={css.container}>
         <h1 className={css.titlePage}>Phonebook</h1>
-        <ContactForm />
+        <h2 className={css.titleLogin}>
+          Please login to view your contact list
+        </h2>
+        <form className={css.formLogin} autoComplete="off">
+          <label className={css.label}>
+            Email
+            <input type="email" name="email" className={css.inputLogin} />
+          </label>
+          <label className={css.label}>
+            Password
+            <input type="password" name="password" className={css.inputLogin} />
+          </label>
+          <button className={css.buttonLogin} type="submit">
+            Log In
+          </button>
+        </form>
+        <div className={css.registerLink}>
+          <h3>Don't have an account?</h3>
+          <Link className={css.linkToRegister}>Create your account</Link>
+        </div> */}
+      {/* <ContactForm />
 
-        <h2 className={css.titleList}>Contacts:</h2>
-        <Filter />
-        <ContactList />
-      </div>
+      <h2 className={css.titleList}>Contacts:</h2>
+      <Filter />
+      <ContactList /> */}
     </div>
   );
 }
