@@ -1,14 +1,17 @@
-import ContactForm from 'components/contactForm/ContactForm';
-import ContactList from 'components/contactList/ContactList';
-import Filter from 'components/filter/Filter';
-import css from './App.module.css';
-import RegisterForm from './RegisterForm/RegisterForm';
-import { Link } from 'react-router-dom';
-import { lazy } from 'react';
+// import ContactForm from 'components/contactForm/ContactForm';
+// import ContactList from 'components/contactList/ContactList';
+// import Filter from 'components/filter/Filter';
+// import css from './App.module.css';
+// import RegisterForm from './RegisterForm/RegisterForm';
+// import { Link } from 'react-router-dom';
+import { lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 import Layout from './Layout';
+import { useDispatch } from 'react-redux';
+import { refreshUser } from '../../src/redux/auth/authOperations';
+import useAuth from 'hooks/useAuth';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
@@ -16,7 +19,15 @@ const LoginPage = lazy(() => import('../pages/Login'));
 const ContactsPage = lazy(() => import('../pages/Contacts'));
 
 export function App() {
-  return (
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
     <div
       style={{
         display: 'flex',

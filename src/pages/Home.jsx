@@ -1,12 +1,8 @@
 export default function Home() {
   return (
     <div>
-      <h1>
-        PhoneBook welcome page{' '}
-        <span role="img" aria-label="Greeting icon">
-          💁‍♀️
-        </span>
-      </h1>
+      <h1>PhoneBook welcome page </h1>
+      <p>Create your own personal book of contacts</p>
     </div>
   );
 }
