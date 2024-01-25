@@ -54,5 +54,5 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { updateFilter } = contactsSlice.actions;
-export default contactsSlice.reducer;
+// export const { updateFilter } = contactsSlice.actions;
+export const contactsReducer = contactsSlice.reducer;

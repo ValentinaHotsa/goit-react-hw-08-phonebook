@@ -10,14 +10,14 @@ function ContactForm() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contacts);
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
-    }
-  };
+  // const handleChange = event => {
+  //   const { name, value } = event.target;
+  //   if (name === 'name') {
+  //     setName(value);
+  //   } else if (name === 'number') {
+  //     setNumber(value);
+  //   }
+  // };
 
   const onSubmit = async evt => {
     evt.preventDefault();
@@ -55,7 +55,7 @@ function ContactForm() {
           type="text"
           name="name"
           value={name}
-          onChange={handleChange}
+          // onChange={handleChange}
           required
         />
       </label>
@@ -67,7 +67,7 @@ function ContactForm() {
           type="tel"
           name="number"
           value={number}
-          onChange={handleChange}
+          // onChange={handleChange}
           required
         />
       </label>

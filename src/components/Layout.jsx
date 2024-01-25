@@ -1,11 +1,9 @@
 import { Outlet } from 'react-router-dom';
-// import { Toaster } from 'react-hot-toast';
-// import { AppBar } from './AppBar/AppBar';
 import { Suspense } from 'react';
 import { Navigation } from './Navigation/Navigation';
 const Layout = () => {
   return (
-    <container>
+    <div>
       <header>
         <Navigation />
       </header>
@@ -16,7 +14,7 @@ const Layout = () => {
           <Outlet />
         </Suspense>
       </main>
-    </container>
+    </div>
   );
 };
 export default Layout;

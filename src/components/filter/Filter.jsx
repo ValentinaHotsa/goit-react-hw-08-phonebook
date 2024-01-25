@@ -1,12 +1,12 @@
 import css from './Filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFilter } from '../../redux/contacts/contactsSlice';
+import { setFilterContacts } from '../../redux/contacts/filterSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.contacts.filter);
+
   const changeFilter = e => {
-    dispatch(updateFilter(e.target.value.toLowerCase()));
+    dispatch(setFilterContacts(e.target.value));
   };
 
   return (
@@ -15,7 +15,7 @@ const Filter = () => {
       <input
         className={css.inputFilter}
         type="text"
-        value={filter}
+        name="filter"
         onChange={changeFilter}
       />
     </label>

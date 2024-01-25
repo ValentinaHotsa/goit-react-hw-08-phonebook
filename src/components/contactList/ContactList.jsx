@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
+  const filter = useSelector(state => state.contacts.filter.toLowerCase());
   const isLoading = useSelector(state => state.contacts.isLoading);
   const error = useSelector(state => state.contacts.error);
 

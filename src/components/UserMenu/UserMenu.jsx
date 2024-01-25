@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../redux/auth/authOperations';
-import { useAuth } from 'hooks';
+
 import css from '../App.module.css';
 import { selectUser } from '../../redux/auth/selectors';
 
