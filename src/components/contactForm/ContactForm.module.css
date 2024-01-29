@@ -1,4 +1,5 @@
 .form {
+  padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,4 +41,6 @@
 .formInput:focus,
 .formInput:active {
   outline: solid 2px #b5675a;
+}
+.containerForm {
 }

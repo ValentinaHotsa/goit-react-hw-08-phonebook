@@ -1,60 +1,42 @@
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
+// import { useState } from 'react';
+// import { nanoid } from '@reduxjs/toolkit';
 import { addContact } from '../../redux/contacts/contactsOperations';
+import { selectContacts } from '../../redux/contacts/selectors';
 
 function ContactForm() {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(selectContacts);
 
-  // const handleChange = event => {
-  //   const { name, value } = event.target;
-  //   if (name === 'name') {
-  //     setName(value);
-  //   } else if (name === 'number') {
-  //     setNumber(value);
-  //   }
-  // };
-
-  const onSubmit = async evt => {
+  function handlerSubmit(evt) {
     evt.preventDefault();
-
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+    const form = evt.target;
+    const name = form.name.value;
+    const number = form.number.value;
 
     if (
-      contacts.some(
-        contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      alert(`${newContact.name} is already in contacts`);
-      return;
+      return alert(`${name} is alredy in contacts.`);
     }
 
-    try {
-      await dispatch(addContact(newContact));
-      setName('');
-      setNumber('');
-    } catch (error) {
-      console.log('Failed to add contact');
-    }
-  };
+    dispatch(addContact({ name, number }));
+
+    form.reset();
+  }
 
   return (
-    <form className={css.form} onSubmit={onSubmit}>
+    <form className={css.form} onSubmit={handlerSubmit}>
       <label className={css.formLabel}>
         Name
         <input
           className={css.formInput}
           type="text"
           name="name"
-          value={name}
+          // value={name}
           // onChange={handleChange}
           required
         />
@@ -66,7 +48,7 @@ function ContactForm() {
           className={css.formInput}
           type="tel"
           name="number"
-          value={number}
+          // value={number}
           // onChange={handleChange}
           required
         />

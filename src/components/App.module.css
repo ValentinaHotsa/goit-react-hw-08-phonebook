@@ -55,3 +55,33 @@ body {
 .registerLink {
   text-align: center;
 }
+.buttonOut {
+  width: 150px;
+  font-size: 20px;
+  background-color: #b5675a;
+  border: solid 1px #646663;
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.buttonOut:hover,
+.buttonOut:focus {
+  background-color: #b15241;
+  border-color: #50544f;
+}
+
+.containerNavigation {
+  display: flex;
+
+  gap: 150px;
+}
+.containerSign {
+  display: flex;
+  gap: 40px;
+}
+.link {
+  text-decoration: none;
+  color: #50544f;
+  font-size: 25px;
+}

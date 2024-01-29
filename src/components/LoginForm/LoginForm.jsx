@@ -1,10 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../redux/auth/authOperations';
-import css from './LoginForm.module.css';
+import css from '../contactForm/ContactForm.module.css';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
-
+  const errorLogin = useSelector(state => state.error);
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -18,16 +18,21 @@ export const LoginForm = () => {
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-      <label className={css.label}>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label className={css.label}>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+    <div className={css.containerForm}>
+      {errorLogin && <div>Error login</div>}
+      <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
+        <label className={css.formLabel}>
+          Email
+          <input className={css.formInput} type="email" name="email" />
+        </label>
+        <label className={css.formLabel}>
+          Password
+          <input className={css.formInput} type="password" name="password" />
+        </label>
+        <button className={css.formButton} type="submit">
+          Log In
+        </button>
+      </form>
+    </div>
   );
 };

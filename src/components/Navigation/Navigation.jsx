@@ -3,12 +3,13 @@ import css from '../App.module.css';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { UserMenu } from 'components/UserMenu/UserMenu';
+
 export const Navigation = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <>
-      <nav>
+      <div className={css.containerNavigation}>
         <NavLink className={css.link} to="/">
           Home
         </NavLink>
@@ -17,12 +18,16 @@ export const Navigation = () => {
             Contacts
           </NavLink>
         ) : (
-          <div>
-            <NavLink to="/register">Register</NavLink>
-            <NavLink to="/login">Log In</NavLink>
+          <div className={css.containerSign}>
+            <NavLink className={css.link} to="/register">
+              Register
+            </NavLink>
+            <NavLink className={css.link} to="/login">
+              Log In
+            </NavLink>
           </div>
         )}
-      </nav>
+      </div>
       {isLoggedIn && <UserMenu />}
     </>
   );

@@ -47,7 +47,7 @@ export function App() {
               }
             />
             <Route
-              path="/login"
+              path="login"
               element={
                 <RestrictedRoute
                   redirectTo="/contacts"
@@ -56,7 +56,7 @@ export function App() {
               }
             />
             <Route
-              path="/contacts"
+              path="contacts"
               element={
                 <PrivateRoute
                   redirectTo="/login"
