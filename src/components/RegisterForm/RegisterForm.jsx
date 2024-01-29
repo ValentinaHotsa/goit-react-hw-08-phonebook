@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/authOperations';
+import { registerThunk } from '../../redux/auth/authOperations';
 // import css from './RegisterForm.module.css';
 import css from '../contactForm/ContactForm.module.css';
+import { Link } from 'react-router-dom';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export const RegisterForm = () => {
     const form = e.currentTarget;
 
     dispatch(
-      register({
+      registerThunk({
         name: form.elements.name.value,
         email: form.elements.email.value,
         password: form.elements.password.value,
@@ -29,13 +30,20 @@ export const RegisterForm = () => {
             className={css.formInput}
             type="text"
             name="name"
-            required
             minLength={3}
+            id="inputName"
+            placeholder="name"
           />
         </label>
         <label className={css.formLabel}>
           Email
-          <input className={css.formInput} type="email" name="email" required />
+          <input
+            className={css.formInput}
+            type="email"
+            name="email"
+            id="inputEmail"
+            placeholder="email"
+          />
         </label>
         <label className={css.formLabel}>
           Password
@@ -43,13 +51,15 @@ export const RegisterForm = () => {
             className={css.formInput}
             type="password"
             name="password"
-            required
             minLength={7}
+            id="inputPassword"
+            placeholder="password"
           />
         </label>
         <button className={css.formButton} type="submit">
           Register
         </button>
+        <Link to="/login">Login</Link>
       </form>
     </div>
   );

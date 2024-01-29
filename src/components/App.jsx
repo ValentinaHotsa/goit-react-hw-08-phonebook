@@ -1,4 +1,4 @@
-import { lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
@@ -12,7 +12,7 @@ const RegisterPage = lazy(() => import('../pages/Register'));
 const LoginPage = lazy(() => import('../pages/Login'));
 const ContactsPage = lazy(() => import('../pages/Contacts'));
 
-export function App() {
+export const App = () => {
   const dispatch = useDispatch();
 
   const isRefreshing = useSelector(selectIsRefreshing);
@@ -21,7 +21,9 @@ export function App() {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <b> Refreshing user...</b>
+  ) : (
     <div
       style={{
         display: 'flex',
@@ -31,23 +33,21 @@ export function App() {
         color: 'rgb(59, 55, 55)',
       }}
     >
-      {isRefreshing ? (
-        <b> Refreshing user...</b>
-      ) : (
+      <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route
-              path="register"
+              path="/register"
               element={
                 <RestrictedRoute
-                  redirectTo="/contacts"
+                  redirectTo="/login"
                   component={<RegisterPage />}
                 />
               }
             />
             <Route
-              path="login"
+              path="/login"
               element={
                 <RestrictedRoute
                   redirectTo="/contacts"
@@ -56,7 +56,7 @@ export function App() {
               }
             />
             <Route
-              path="contacts"
+              path="/contacts"
               element={
                 <PrivateRoute
                   redirectTo="/login"
@@ -65,8 +65,14 @@ export function App() {
               }
             />
           </Route>
+          <Route
+            path="*"
+            element={
+              <PrivateRoute redirectTo="/contacts" component={<HomePage />} />
+            }
+          />
         </Routes>
-      )}
+      </Suspense>
     </div>
   );
-}
+};

@@ -9,6 +9,9 @@ const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
 };
+const handleFulfilled = state => {
+  state.isLoading = false;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -49,8 +52,14 @@ const contactsSlice = createSlice({
           contact => contact.id === action.payload.id
         );
         state.contacts.splice(index, 1);
-      });
-    // .addCase(deleteContact.rejected, handleRejected);
+      })
+      .addCase(deleteContact.rejected, handleRejected)
+      .addMatcher(action => action.type.endsWith('/pending'), handlePending)
+      .addMatcher(action => action.type.endsWith('/rejected'), handleRejected)
+      .addMatcher(
+        action => action.type.endsWith('/fulfilled'),
+        handleFulfilled
+      );
   },
 });
 
